@@ -21,7 +21,7 @@ const Login = () => {
     e.preventDefault();
     // console.log(data)
     try {
-      const url = "http://localhost:3000/api/login";
+      const url = "https://event-backend-s1hg.onrender.com/api/login";
       const res = await axios.post(url, data);
       console.log(res.data.message); 
 
