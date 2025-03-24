@@ -70,7 +70,7 @@ const Home = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('userName')
     localStorage.removeItem('role')
-    window.location.href = '/login'
+    navigate('/login')
   }
 
   const sectionRef = useRef(null);
