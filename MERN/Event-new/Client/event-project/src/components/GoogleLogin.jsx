@@ -15,7 +15,6 @@ const GoogleLogin = () => {
             localStorage.setItem('userName', name)
             localStorage.setItem('token', token)
             localStorage.setItem('email', email)
-        })
             navigate('/')
           }
         } catch (error) {
