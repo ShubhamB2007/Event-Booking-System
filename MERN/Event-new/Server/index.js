@@ -26,6 +26,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.get('/', (req, res) => { 
   res.send('Hello World!')
 }) 
+
+app.get('/api/ping', (req, res) => {
+    res.status(200).send('Server is active');
+});
  
 app.use("/api", signupRoute)
 app.use("/api",loginRoute)
