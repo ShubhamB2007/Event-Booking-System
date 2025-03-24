@@ -64,9 +64,6 @@ const EventDetail = () => {
     try {
       const res = await axios.post('https://event-backend-s1hg.onrender.com/api/events/booking', ticketData);
       console.log("Booking Done:", res.data);
-      toast.success('Your Booking is Successfully Added', {
-          position: 'top-right'
-        })
       navigate('/booking-list');
    
     } catch (error) {
