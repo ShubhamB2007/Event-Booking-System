@@ -70,6 +70,9 @@ const Create = () => {
         },
       });
       console.log(res.data);
+      toast.success('Event Created Successfully!', {
+          position: 'top-right'
+        })
       navigate('/organize-event')
     } catch (error) {
       console.log(error);
