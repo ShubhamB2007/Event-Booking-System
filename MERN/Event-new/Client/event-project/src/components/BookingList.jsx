@@ -27,6 +27,9 @@ const BookingList = () => {
     const res = await axios.delete(`https://event-backend-s1hg.onrender.com/api/events/booking/${id}`)
     console.log(res.data)
     setList((prevList) => prevList.filter((item) => item._id !== id));
+    toast.success('Booking Deleted Successfully!', {
+          position: 'top-right'
+        })
    } catch (error) {
     console.log(error)
    }
