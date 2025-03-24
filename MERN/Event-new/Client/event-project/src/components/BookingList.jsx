@@ -13,7 +13,7 @@ const BookingList = () => {
   useEffect(() => {
     const loadList = async()=>{
     try { 
-      const res = await axios.get("http://localhost:3000/api/events/booking")
+      const res = await axios.get("https://event-backend-s1hg.onrender.com/api/events/booking")
       console.log(res.data)
       setList(res.data)
     } catch (error) {
@@ -24,7 +24,7 @@ const BookingList = () => {
 
   const handleDelete = async(id)=>{
    try {
-    const res = await axios.delete(`http://localhost:3000/api/events/booking/${id}`)
+    const res = await axios.delete(`https://event-backend-s1hg.onrender.com/api/events/booking/${id}`)
     console.log(res.data)
     setList((prevList) => prevList.filter((item) => item._id !== id));
    } catch (error) {
