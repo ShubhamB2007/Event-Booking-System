@@ -15,6 +15,9 @@ const GoogleLogin = () => {
             localStorage.setItem('userName', name)
             localStorage.setItem('token', token)
             localStorage.setItem('email', email)
+            toast.success(`Welcome ${name}!`, {
+          position: 'top-right'
+        })
             navigate('/')
           }
         } catch (error) {
