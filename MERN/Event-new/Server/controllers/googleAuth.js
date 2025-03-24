@@ -22,7 +22,7 @@ const googleLogin = async (req,res)=>{
         let user = await User.findOne({email})
         if (!user){
             user = await createUser({
-                name,email,password:"google-auth-user",role:'user'
+                name,email,password:"google-auth-user",role:'User'
             })
         }else {
             console.log("Existing User Found:", user);
