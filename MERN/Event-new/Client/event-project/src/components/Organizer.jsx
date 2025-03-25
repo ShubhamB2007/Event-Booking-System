@@ -15,7 +15,7 @@ const Organizer = () => {
   useEffect(() => {
     const loadEvents = async () => {
       try {
-          const res = await axios.get(`http://localhost:3000/api/events/email/${email}`)
+          const res = await axios.get(`https://event-backend-s1hg.onrender.com/api/events/email/${email}`)
           setEvents(res.data);
           console.log(res.data)
       } catch (error) { 
