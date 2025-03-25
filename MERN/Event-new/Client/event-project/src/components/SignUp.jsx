@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {GoogleOAuthProvider} from '@react-oauth/google'
 import axios from 'axios';
 import GoogleLogin from './GoogleLogin';
+import { toast } from 'react-toastify'; 
 
 const SignUp = () => {
   const [data, setData] = useState({ 
@@ -24,12 +25,13 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "https://event-backend-s1hg.onrender.com/api/signup";
+      const url = "http://localhost:3000/api/signup";
       const response = await axios.post(url, data);
       console.log(response.data);
       const {name,role} = response.data.user;
       localStorage.setItem('userName', name)
       localStorage.setItem('role', role)
+      toast.success(`Welcome ${name}`, { position: "top-right" })
       navigate('/');
     } catch (error) {
       if (error.response) {

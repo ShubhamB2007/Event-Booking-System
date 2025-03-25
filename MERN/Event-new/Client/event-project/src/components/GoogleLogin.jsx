@@ -2,6 +2,8 @@ import React from 'react'
 import {useGoogleLogin} from '@react-oauth/google'
 import { googleAuth } from '../api'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'; 
+
 
 const GoogleLogin = () => {
 
@@ -15,6 +17,7 @@ const GoogleLogin = () => {
             localStorage.setItem('userName', name)
             localStorage.setItem('token', token)
             localStorage.setItem('email', email)
+            toast.success(`Welcome ${name}`,{ position: "top-right" })
             navigate('/')
           }
         } catch (error) {

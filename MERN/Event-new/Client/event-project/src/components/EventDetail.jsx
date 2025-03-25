@@ -5,6 +5,8 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { fetchEventById } from '../services/eventService';
 import axios from 'axios';
 import { motion } from "framer-motion"; 
+import { toast } from 'react-toastify'; 
+
 
 const EventDetail = () => {
   const navigate = useNavigate();
@@ -62,10 +64,10 @@ const EventDetail = () => {
   
     console.log("Final Ticket Data:", ticketData);
     try {
-      const res = await axios.post('https://event-backend-s1hg.onrender.com/api/events/booking', ticketData);
+      const res = await axios.post('http://localhost:3000/api/events/booking', ticketData);
       console.log("Booking Done:", res.data);
       navigate('/booking-list');
-   
+      toast.success('Your Booking is Added!', { position: "top-right" })
     } catch (error) {
       console.log(error.message); 
     }

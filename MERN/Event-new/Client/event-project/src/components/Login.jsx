@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; 
 import {GoogleOAuthProvider} from '@react-oauth/google'
 import GoogleLogin from "./GoogleLogin";
+import { toast } from 'react-toastify'; 
+
 
 const Login = () => {
   const [data, setData] = useState({
@@ -21,16 +23,17 @@ const Login = () => {
     e.preventDefault();
     // console.log(data)
     try {
-      const url = "https://event-backend-s1hg.onrender.com/api/login";
+      const url = "http://localhost:3000/api/login";
       const res = await axios.post(url, data);
       console.log(res.data.message); 
-
+    
       const { token, user } = res.data
 
       if (res.data.token) {
         localStorage.setItem('token', token)
         localStorage.setItem('userName', user.name)
         localStorage.setItem('Email', user.email)
+        toast.success(`Welcome ${user.name}`, { position: "top-right" })
         navigate('/'); 
       } else {
         console.log("Token not found");

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify'; 
+
 
 const Create = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -64,12 +66,13 @@ const Create = () => {
         formDataToSend.append("image", formData.image);
       }
   
-      const res = await axios.post("https://event-backend-s1hg.onrender.com/api/events", formDataToSend, {
+      const res = await axios.post("http://localhost:3000/api/events", formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       console.log(res.data);
+      toast.success('Event Created Successfully!', { position: "top-right" })
       navigate('/organize-event')
     } catch (error) {
       console.log(error);
