@@ -66,7 +66,7 @@ const Create = () => {
         formDataToSend.append("image", formData.image);
       }
   
-      const res = await axios.post("http://localhost:3000/api/events", formDataToSend, {
+      const res = await axios.post("https://event-backend-s1hg.onrender.com/api/events", formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
