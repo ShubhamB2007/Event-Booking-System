@@ -15,7 +15,7 @@ const Organizer = () => {
   useEffect(() => {
     const loadEvents = async () => {
       try {
-          const res = await axios.get(`http://localhost:3000/api/events/email/${email}`)
+          const res = await axios.get(`https://event-backend-s1hg.onrender.com/api/events/email/${email}`)
           setEvents(res.data);
           console.log(res.data)
       } catch (error) { 
@@ -27,7 +27,7 @@ const Organizer = () => {
 
   const handleDelete = async(id)=>{
     try {
-      const res = await axios.delete(`http://localhost:3000/api/events/email/${email}/${id}`)
+      const res = await axios.delete(`https://event-backend-s1hg.onrender.com/api/events/email/${email}/${id}`)
       console.log(res.data)
       setEvents((prevEvents) => prevEvents.filter((item) => item._id !== id));
       toast.success('Event Deleted Successfully', { position: "top-right" })
