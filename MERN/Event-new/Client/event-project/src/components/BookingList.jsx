@@ -5,16 +5,29 @@ import { useNavigate } from 'react-router-dom';
 import { MdDelete } from "react-icons/md";
 import { motion } from "framer-motion";
 import { toast } from 'react-toastify'; 
+import { MdArrowBackIos } from "react-icons/md";
+import { useWindowSize } from 'react-use'
+import Confetti from 'react-confetti'
 
 const BookingList = () => {
-  
+   
   const navigate = useNavigate()
   const [list, setList] = useState([])
+  const user = localStorage.getItem('id')
+  const { width, height } = useWindowSize()
+  const [showConfetti, setShowConfetti] = useState(true);
     
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowConfetti(false); 
+    }, 5000);
+    return () => clearTimeout(timer); 
+  }, []);
+
   useEffect(() => {
     const loadList = async()=>{
     try { 
-      const res = await axios.get("http://localhost:3000/api/events/booking")
+      const res = await axios.get(`http://localhost:3000/api/events/booking?user=${user}`)
       console.log(res.data)
       setList(res.data)
     } catch (error) {
@@ -46,6 +59,8 @@ const BookingList = () => {
 
   return ( 
     <div className='w-full h-full absolute flex flex-col items-center gap-3'>
+       {showConfetti && <Confetti width={1700} height={700} gravity={0.5} />}
+        <MdArrowBackIos onClick={()=>navigate('/')} className='text-2xl font-bold absolute top-5 left-10 cursor-pointer text-black'/>
         <motion.p initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.5}} className='text-2xl font-bold text-black absolute top-5'>Your Booking List</motion.p>
         <FaAngleLeft onClick={()=>navigate('/')} className='text-white absolute top-7 left-5 text-2xl cursor-pointer' />
         {list.map((item,index)=>(
@@ -53,7 +68,7 @@ const BookingList = () => {
          variants={BookingVariants} initial='hidden' animate='visible' custom={index}
          key={index} className='w-[80%] lg:w-[50%] h-[110px] bg-[#e24718] rounded-lg relative top-20 flex items-center'>
            <div className='w-20 h-24 border absolute left-2 rounded-lg'>
-           <img src={item.image} alt=""  className='w-full h-full object-cover rounded-lg'/>  
+           <img src={item?.image?.includes('uploads') ? `http://localhost:3000${item.image}` : item.image} alt=""  className='w-full h-full object-cover rounded-lg'/>  
            </div>
            <p className='text-white font-bold absolute top-3 left-[102px] text-xl'>{item.name}</p>
            <p className='text-white absolute top-11 left-[102px]'>Tickets: {item.tickets}</p>

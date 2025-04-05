@@ -7,8 +7,8 @@ const login = async(req,res)=>{
      const token = await authService.login(email,password)
 
       const user = await User.findOne({email}).select('name email')
-      res.json({token:token, user:{name:user.name, email:user.email}})
-   } catch (error) {
+      res.json({token:token, user:{name:user.name, email:user.email,id:user._id}})
+   } catch (error) { 
     res.status(401).json({message:"Invalid Credentials"}) 
    }
 }

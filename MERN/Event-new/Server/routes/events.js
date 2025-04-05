@@ -5,6 +5,10 @@ const Venue = require('../models/Venue')
 const Booking = require('../models/Booking')
 const { v4: uuid } = require('uuid');
 const multer = require('multer')
+require('dotenv').config()
+const axios = require('axios')
+const { GoogleGenerativeAI } = require('@google/generative-ai');
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -39,8 +43,10 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/booking', async (req, res) => { 
+
+  const user = req.query.user;
   try {
-    const bookings = await Booking.find();
+    const bookings = await Booking.find({userId:user});
     if (!bookings || bookings.length === 0) {
       return res.status(404).json({ message: 'No bookings found' });
     } 
@@ -65,6 +71,19 @@ router.get('/id/:id', async (req, res) => {
   try {
     const event = await Event.findById(req.params.id) 
     if (!event) return res.status(404).json({ message: "No event found" });
+    res.json(event);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
+router.get('/name/:name', async (req, res) => {
+  const name = req.params.name;
+  console.log(name)
+  try {
+    const event = await Event.find({name:name}) 
+    if (event.length === 0) return res.status(404).json({ message: "No event found" });
     res.json(event);
   } catch (error) {
     console.error(error);
@@ -122,7 +141,7 @@ router.delete('/:id', async (req, res) => {
   });
 
   router.post('/booking', async(req,res)=>{
-    const {eventId,name,price,image, quantity,totalPrice}= req.body
+    const {userId,eventId,name,price,image, quantity,totalPrice}= req.body
     try {
       const event = await Event.findById(eventId)
       if(!event) return res.status(404).send("No Event Found")
@@ -132,6 +151,7 @@ router.delete('/:id', async (req, res) => {
         }
 
        const booking = new Booking({
+         userId,
          eventId,
          name,
          tickets:quantity,
@@ -152,6 +172,44 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
+ router.post('/suggest-events', async (req,res)=>{
+    try {
+      const {userId} = req.body;
+     
+      const pastBookings = await Booking.find({userId})
+      // console.log(pastBookings)
+      if(!pastBookings.length){
+       return res.status(404).json({message:'No Past Bookings Found'})
+      }
+
+      const bookedEventsNames = pastBookings.map(booking => booking.name).filter(Boolean);
+
+      const availableEvents = await Event.find()
+      if (!availableEvents.length) {
+        return res.status(404).json({ message: "No available events found" });
+      }
+
+      const model = genAI.getGenerativeModel({ model: "models/gemini-1.5-pro-latest" });
+
+    
+      const prompt = `A user has previously booked following events: ${bookedEventsNames.join( ', ')}. From the available events: ${availableEvents.map(e=>e.name).join(', ')},suggest 3 events only names(not anything else) that match user's interest`
+
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const suggestionText = response.text();
+
+      const suggestions = suggestionText
+        .split('\n')
+        .map(line => line.replace(/^\d+\.\s*/, '').trim())
+        .filter(Boolean);
+  
+      res.json({ suggestions });
+    } catch (error) {
+      console.error("AI Suggestion Error:", error);
+      res.status(500).json({ error: "Failed to generate event suggestions" });
+    }
+ })
+
 
   
-  module.exports = router;  
+  module.exports = router;

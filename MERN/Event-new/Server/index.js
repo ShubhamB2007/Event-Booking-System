@@ -10,14 +10,14 @@ require('dotenv').config()
 const path = require("path");
   
 let url = "mongodb+srv://shubhambudhakar:2007shubham@cluster0.3ifwv.mongodb.net/Events?retryWrites=true&w=majority&appName=Cluster0"
- 
+  
 mongoose.connect(url)
   .then(() => console.log('Connected to DB'))
   .catch(error => console.log('Database connection error:', error));
   
 app.use(express.json())
 
-app.use(cors());
+app.use(cors()); 
  
 app.options("*", cors())
 

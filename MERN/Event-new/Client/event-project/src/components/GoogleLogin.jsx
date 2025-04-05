@@ -12,11 +12,12 @@ const GoogleLogin = () => {
         try {
           if(authResult['code']){
             const result = await googleAuth(authResult['code'])
-            const {email,name} = result.data.user
+            const {email,name,_id} = result.data.user
             const {token} = result.data.token
             localStorage.setItem('userName', name)
             localStorage.setItem('token', token)
             localStorage.setItem('email', email)
+            localStorage.setItem('id',_id.toString())
             toast.success(`Welcome ${name}`,{ position: "top-right" })
             navigate('/')
           }

@@ -23,13 +23,13 @@ const Hero = () => {
     }, [])
 
     const images = [
-       "./custom/coldplay.jpg",
-       "./custom/aladin.jpg",
+       "./custom/cwc.jpg",
        "./custom/stree2.jpg",
-       "./custom/fifa.jpg",
+       "./custom/coldplay.jpg",
        "./custom/saturday.jpg",
+       "./custom/aladin.jpg",
+       "./custom/fifa.jpg",
        "./custom/ucl.jpg",
-        "./custom/cwc.jpg"
        
     ]
  

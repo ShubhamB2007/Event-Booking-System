@@ -3,12 +3,13 @@ import { IoSearch } from "react-icons/io5";
 import { FaAngleRight } from "react-icons/fa6";
 import { GrFavorite } from "react-icons/gr";
 import { useNavigate } from 'react-router-dom';
-import {fetchEvents} from '../services/eventService'
+import {fetchEventByName, fetchEvents} from '../services/eventService'
 import { useState,useEffect } from 'react';
 import { SearchContext } from '../context/SearchContext';
 import Hero from './Hero';
 import Category from './Category';
 import { motion, useInView } from "framer-motion";
+import axios from 'axios';
 
 
 const Home = () => {
@@ -21,6 +22,8 @@ const Home = () => {
   const [searchData, setSearchData] = useState([])
   const [show, setShow] = useState(false)
   const navigate = useNavigate()
+  const [suggested, setSuggested] = useState()
+  const [suggestedEvents, setSuggestedEvents] = useState([])
 
   const handleSearch = (item)=>{
     navigate(`/event-detail/${item._id}`)
@@ -55,7 +58,7 @@ const Home = () => {
       try {
           const data = await fetchEvents(searchQuery);
           setSearchData(data);
-          console.log(searchData)
+          // console.log(searchData)
       } catch (error) {
           console.error("Error fetching events:", error.message);
       }  
@@ -63,14 +66,59 @@ const Home = () => {
   loadEvents()
   }, [searchQuery])
 
+  const fetchSuggestionAndEvents = async()=>{
+    const userId = localStorage.getItem('id')
+    if(!userId) return;
+
+    let retries = 3;
+    let delay = 40000;
+
+    for (let i = 0; i < retries; i++) {
+    try {
+      const res = await axios.post('http://localhost:3000/api/events/suggest-events', {userId})
+      const suggestionNames = res.data.suggestions;
+      if (suggestionNames.length === 0) return;
+      const events = await Promise.all(
+        suggestionNames.map((name) => fetchEventByName(name))
+      );
+ 
+      setSuggestedEvents(events.flat());  
+     console.log("Suggested Events (full data):", events.flat());
+
+    } catch (error) {
+      console.error("Failed to fetch AI suggestions:", error);
+       const initialEvents = ['Euro Final 2024', 'Cricket CWC Final 23', 'Aladdin']
+       const initialEventsData = await Promise.all(
+        initialEvents.map(name=>fetchEventByName(name))
+       )
+       setSuggestedEvents(initialEventsData.flat())
+       console.log(initialEventsData)
+      if (error.response?.status === 429 && i < retries - 1) {
+        console.log(`Retrying in ${delay / 1000} seconds...`);
+        await new Promise((res) => setTimeout(res, delay));
+        delay *= 2
+    } else {
+      return;
+  } 
+}
+}}
+
+  useEffect(()=>{
+    fetchSuggestionAndEvents()
+    console.log(suggestedEvents)
+  },[])  
+
   const goToEvents = ()=>{
     navigate('/events')
   }
+
 
   const LogOut =()=>{
     localStorage.removeItem('token')
     localStorage.removeItem('userName')
     localStorage.removeItem('role')
+    localStorage.removeItem('email')
+    localStorage.removeItem('id')
     window.location.href = '/login'
   }
 
@@ -126,7 +174,7 @@ const Home = () => {
             <div className='absolute text-black font-semibold top-10 lg:top-20 left-28 lg:left-52'>No Match Found</div>
            )}
         </div>
-        )}
+        )} 
       </div>
 
         <Hero/> 
@@ -134,16 +182,16 @@ const Home = () => {
 
         <div ref={sectionRef} className='absolute w-full min-h-[450px] lg:top-[1050px] top-[530px] flex justify-center'>
            <div className='w-[85%] lg:w-[80%] flex absolute top-4 lg:ml-20'>
-              <p className='text-black font-bold lg:text-2xl text-lg absolute lg:left-5'>Featured Events</p>
-              <button onClick={goToEvents} className='w-20 lg:h-8 h-6 rounded-full text-white text-sm font-semibold top-[2px] bg-[#e24718] absolute left-36 lg:left-52'>See all</button>
+              <p className='text-black font-bold lg:text-2xl text-lg absolute lg:left-5'>Suggested Events</p>
+              <button onClick={goToEvents} className='w-20 lg:h-8 h-6 rounded-full text-white text-sm font-semibold top-[2px] bg-[#e24718] absolute left-40 lg:left-56'>See all</button>
               <div  className='w-full min-h-[388px] absolute top-11 lg:left-4 grid grid-cols-3 gap-x-6 gap-y-2 lg:gap-x-0 lg:gap-y-4'>
-                {events.slice(0,3).map((event,index)=>( 
+                {suggestedEvents.map((event,index)=>( 
                 <motion.div
                 variants={ProductVariants} initial='hidden' animate={isInView ? 'visible' : 'hidden'} custom={index} 
                 onClick={()=>navigate(`/event-detail/${event._id}`)}
                 key={index}
                 className='cursor-pointer w-24 lg:w-72 h-44 lg:h-[410px] border rounded-lg relative bg-white shadow-lg'>
-                <img src={event.image} alt="" className='rounded-lg w-full lg:h-80 h-32 object-cover brightness-90' />
+                <img src={event.image?.includes('uploads') ? `http://localhost:3000${event.image}` : event.image} alt="" className='rounded-lg w-full lg:h-80 h-32 object-cover brightness-90' />
                 <div className='lg:w-16 lg:h-6 h-4 w-12 absolute text-white bg-[#e24718] rounded-lg lg:text-xs text-[8px] flex justify-center items-center font-bold top-1 left-2'>{event.category}</div>
                 <GrFavorite className='text-white lg:text-xl  font-bold absolute lg:top-2 top-[5px] left-[75%] lg:left-[90%]'/>
                 <div className='absolute w-full lg:top-80 top-32 h-[90px]'>
