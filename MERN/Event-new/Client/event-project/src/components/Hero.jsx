@@ -30,7 +30,6 @@ const Hero = () => {
        "./custom/aladin.jpg",
        "./custom/fifa.jpg",
        "./custom/ucl.jpg",
-       
     ]
  
     

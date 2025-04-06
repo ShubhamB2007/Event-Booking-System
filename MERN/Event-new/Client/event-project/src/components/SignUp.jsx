@@ -23,14 +23,15 @@ const SignUp = () => {
   }; 
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     try {
       const url = "https://event-backend-s1hg.onrender.com/api/signup";
       const response = await axios.post(url, data);
       console.log(response.data);
-      const {name,role} = response.data.user;
+      const {name,role,id} = response.data.user;
       localStorage.setItem('userName', name)
       localStorage.setItem('role', role)
+      localStorage.setItem('id', id.toString())
       toast.success(`Welcome ${name}`, { position: "top-right" })
       navigate('/');
     } catch (error) {

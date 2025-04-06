@@ -234,4 +234,8 @@ option{
   }
 }
 
+.payinput::placeholder{
+  font-size: 11px;
+}
+
     

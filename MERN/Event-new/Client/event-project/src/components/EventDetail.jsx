@@ -196,15 +196,15 @@ const EventDetail = () => {
       {show &&
         <motion.div 
         variants={BookVariants} initial='hidden' animate='visible'
-        className='w-[85%] lg:w-[45%] lg:top-32 h-36 lg:h-[420px] bg-[#141414] rounded-lg absolute top-52 text-white flex'>
-          <div className='w-[50%] h-[63%] border-r-2 border-gray-500 flex flex-col items-center gap-4 mt-10 pt-10 pr-1'>
-            <p className='text-xl absolute top-9 font-semibold'>Booking Details</p>
-           <div className='w-72 h-12 border flex justify-between items-center gap-2 border-gray-500 rounded-lg p-3'> 
-          <p className='text-lg ml-0 mt-[12px]'>Ticket Price:</p>
-          <p className='font-bold text-[#e24718] text-lg mt-[13px]'>{event.price}</p>
+        className='w-[85%] lg:w-[45%] lg:top-32 h-[360px] lg:h-[420px] bg-[#141414] rounded-lg absolute top-40 text-white flex'>
+          <div className='w-[50%] h-[65%] border-r-2 border-gray-500 flex flex-col items-center gap-4 mt-10 pt-10 pr-1'>
+            <p className='lg:text-xl text-base absolute top-9 font-semibold'>Booking Details</p>
+           <div className='lg:w-72 w-32 lg:h-12 h-10 border flex justify-between items-center gap-2 border-gray-500 rounded-lg p-3'> 
+          <p className='lg:text-lg text-xs ml-0 mt-[12px]'>Ticket Price:</p>
+          <p className='font-bold text-[#e24718] lg:text-lg text-xs mt-[13px]'>{event.price}</p>
           </div>
-          <div className='w-72 h-12 border flex items-center gap-2 border-gray-500 rounded-lg p-3 justify-between'>
-          <p className='text-lg mt-[12px]'>Ticket Quantity:</p>
+          <div className='lg:w-72 w-32 lg:h-12 h-10 border flex items-center gap-2 border-gray-500 rounded-lg p-3 justify-between'>
+          <p className='lg:text-lg text-xs mt-[12px]'>Ticket Quantity:</p>
           <select
             onChange={handleQuantityChange}
             className='bg-black border rounded-lg w-12'
@@ -215,29 +215,29 @@ const EventDetail = () => {
             ))}
           </select>
           </div>
-          <div className='w-72 h-12 border flex items-center gap-2 border-gray-500 rounded-lg p-3 justify-between'>
-            <p className='text-lg mt-[12px]'>Total Amount:</p>
-            <p className='font-bold text-[#e24718] text-lg mt-[14px]'>{event.price * quantity}</p>
+          <div className='lg:w-72 w-32 lg:h-12 h-10 border flex items-center gap-2 border-gray-500 rounded-lg p-3 justify-between'>
+            <p className='lg:text-lg text-xs mt-[12px]'>Total Amount:</p>
+            <p className='font-bold text-[#e24718] lg:text-lg text-xs mt-[14px]'>{event.price * quantity}</p>
           </div>
           </div>
 
-         <div className='w-[50%] h-[63%] mt-10 flex flex-col items-center gap-4 pt-10'>
-            <p className='text-xl absolute top-9 font-semibold'>Payment Details</p>
-            <input type="text" name='number' onChange={handleChange} className='w-72 h-12 border border-gray-500 bg-transparent rounded-lg pl-5 pb-1' placeholder='Enter Debit/Credit Card No.' />
-            <input type="text" name='name' onChange={handleChange} className='w-72 h-12 border border-gray-500 bg-transparent rounded-lg pl-5 pb-1' placeholder='Enter Your Full Name' />
-            <input type="text" name='CVV' onChange={handleChange} className='w-72 h-12 border border-gray-500 bg-transparent rounded-lg pl-5 pb-1' placeholder='Enter Your CVV' />
+         <div className='w-[50%] h-[65%] mt-10 flex flex-col items-center gap-4 pt-10'>
+            <p className='lg:text-xl text-base absolute top-9 font-semibold'>Payment Details</p>
+            <input type="text" name='number' onChange={handleChange} className='payinput lg:w-72 w-32 lg:h-12 h-10 border border-gray-500 bg-transparent rounded-lg pl-2 pb-1 lg:text-base text-xs' placeholder='Enter Debit/Credit Card No.' />
+            <input type="text" name='name' onChange={handleChange} className='payinput lg:w-72 w-32 lg:h-12 h-10 border border-gray-500 bg-transparent rounded-lg pl-2 pb-1 lg:text-base text-xs' placeholder='Enter Your Full Name' />
+            <input type="text" name='CVV' onChange={handleChange} className='payinput lg:w-72 w-32 lg:h-12 h-10 border border-gray-500 bg-transparent rounded-lg pl-2 pb-1 lg:text-base text-xs' placeholder='Enter Your CVV' />
          </div>
   
 
           <button
             onClick={handleBookNow}
-            className='text-white font-bold bg-[#e24718] w-32 lg:w-48 lg:h-12 h-7 rounded-lg absolute lg:left-[140px] lg:top-[330px] top-[305px] left-52 hover:bg-[#e24718d4] hover:duration-200'
+            className='text-white font-bold bg-[#e24718] w-32 lg:w-48 lg:h-12 h-8 rounded-lg absolute lg:left-[140px] lg:top-[330px] top-[305px] left-7 hover:bg-[#e24718d4] hover:duration-200'
           >
             Book Now
           </button>
           <button
             onClick={() => setShow(false)}
-            className='bg-red-600 w-20 h-6 text-sm lg:w-48 lg:h-12 font-semibold lg:text-base rounded-lg absolute left-[40%] top-24 lg:left-[51.4%] lg:top-[330px] hover:bg-red-700 hover:duration-200'
+            className='bg-red-600 w-32 h-8 text-sm lg:w-48 lg:h-12 font-semibold lg:text-base rounded-lg absolute left-[51.5%] top-[305px] lg:left-[51.4%] lg:top-[330px] hover:bg-red-700 hover:duration-200'
           >
             Cancel
           </button>

@@ -68,7 +68,19 @@ const Home = () => {
 
   const fetchSuggestionAndEvents = async()=>{
     const userId = localStorage.getItem('id')
-    if(!userId) return;
+    let fallbackUsed = true;
+
+    if (!userId) {
+      console.log("User not logged in. Showing default suggestions.");
+      const initialEvents = ['Euro Final 2024', 'Cricket CWC Final 23', 'Aladdin'];
+      const initialEventsData = await Promise.all(
+        initialEvents.map((name) => fetchEventByName(name))
+      );
+      setSuggestedEvents(initialEventsData.flat());
+      console.log("Fallback Events (no user):", initialEventsData.flat());
+      return;
+    }
+  
 
     let retries = 3;
     let delay = 40000;
@@ -77,7 +89,11 @@ const Home = () => {
     try {
       const res = await axios.post('http://localhost:3000/api/events/suggest-events', {userId})
       const suggestionNames = res.data.suggestions;
-      if (suggestionNames.length === 0) return;
+      console.log(suggestionNames)
+
+      if (!suggestionNames || suggestionNames.length === 0) {
+        throw new Error("Empty suggestions list");
+      }
       const events = await Promise.all(
         suggestionNames.map((name) => fetchEventByName(name))
       );
@@ -87,25 +103,30 @@ const Home = () => {
 
     } catch (error) {
       console.error("Failed to fetch AI suggestions:", error);
-       const initialEvents = ['Euro Final 2024', 'Cricket CWC Final 23', 'Aladdin']
-       const initialEventsData = await Promise.all(
-        initialEvents.map(name=>fetchEventByName(name))
-       )
-       setSuggestedEvents(initialEventsData.flat())
-       console.log(initialEventsData)
+
+      if (error.response?.status === 404 || fallbackUsed) {
+        console.log("Using fallback events.");
+        const initialEvents = ['Euro Final 2024', 'Cricket CWC Final 23', 'Aladdin'];
+        const initialEventsData = await Promise.all(
+          initialEvents.map((name) => fetchEventByName(name))
+        );
+        setSuggestedEvents(initialEventsData.flat());
+        console.log("Fallback Events:", initialEventsData.flat());
+        return;
+      }
+
       if (error.response?.status === 429 && i < retries - 1) {
         console.log(`Retrying in ${delay / 1000} seconds...`);
         await new Promise((res) => setTimeout(res, delay));
-        delay *= 2
-    } else {
-      return;
-  } 
-}
+        delay *= 2;
+      } else {
+        return;
+      }
+    }    
 }}
 
   useEffect(()=>{
     fetchSuggestionAndEvents()
-    console.log(suggestedEvents)
   },[])  
 
   const goToEvents = ()=>{
