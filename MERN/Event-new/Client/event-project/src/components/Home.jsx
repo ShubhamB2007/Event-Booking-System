@@ -212,7 +212,7 @@ const Home = () => {
                 onClick={()=>navigate(`/event-detail/${event._id}`)}
                 key={index}
                 className='cursor-pointer w-24 lg:w-72 h-44 lg:h-[410px] border rounded-lg relative bg-white shadow-lg'>
-                <img src={event.image?.includes('uploads') ? `http://localhost:3000${event.image}` : event.image} alt="" className='rounded-lg w-full lg:h-80 h-32 object-cover brightness-90' />
+                <img src={event.image?.includes('uploads') ? `https://event-backend-s1hg.onrender.com${event.image}` : event.image} alt="" className='rounded-lg w-full lg:h-80 h-32 object-cover brightness-90' />
                 <div className='lg:w-16 lg:h-6 h-4 w-12 absolute text-white bg-[#e24718] rounded-lg lg:text-xs text-[8px] flex justify-center items-center font-bold top-1 left-2'>{event.category}</div>
                 <div className='absolute w-full lg:top-80 top-32 h-[90px]'>
                   <div className='flex flex-col lg:ml-4 ml-2'>
