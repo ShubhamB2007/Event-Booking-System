@@ -231,7 +231,7 @@ const Home = () => {
         variants={FooterVariants} initial='hidden' animate={isInView ? 'visible': 'hidden'}
         className="bg-white rounded-lg shadow-sm m-4 absolute top-[800px] lg:top-[1550px]">
             <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between relative h-24">
-              <span className="text-sm sm:text-center">© 2025 <a href="https://flowbite.com/" className="hover:underline text-[#e24718]">EventBooking™</a>. All Rights Reserved.
+              <span className="text-sm sm:text-center">© 2025 <a href="https://event-frontend-ekff.onrender.com" className="hover:underline text-[#e24718]">EventBooking™</a>. All Rights Reserved.
             </span>
             <ul className="flex gap-3 items-center mt-2 lg:mb-2 text-xs lg:text-sm font-medium relative lg:right-4 right-7">
                 <li>
