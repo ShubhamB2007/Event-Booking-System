@@ -165,7 +165,7 @@ const EventDetail = () => {
         {event && (
         <motion.img 
         variants={ImageVariants} initial='hidden' animate='visible'
-        img src={event?.image?.includes('uploads') ? `http://localhost:3000${event.image}` : event.image}  alt="" className='absolute w-full h-full object-cover' />
+        img src={event?.image?.includes('uploads') ? `http://https://event-backend-s1hg.onrender.com${event.image}` : event.image}  alt="" className='absolute w-full h-full object-cover' />
       )}
       </div>
 
