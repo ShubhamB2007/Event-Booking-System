@@ -169,7 +169,7 @@ const Home = () => {
   return ( 
     <div className='w-full h-[1000px] lg:h-[1700px] flex justify-center'>
       <div className='w-full lg:h-16 h-36 bg-white z-50'>
-        <div className='flex lg:gap-4 lg:justify-start justify-between items-center absolute top-4 left-6 lg:w-[500px] w-[340px]'>
+        <div className='flex lg:gap-4 lg:justify-start justify-between items-center absolute top-4 left-6 lg:w-[500px] w-[345px]'>
         <p className='text-black font-semibold text-sm lg:text-lg lg:w-60 w-44'>{userName ? `Hello, ${userName }`:'Hello Guest'}</p>
         <div className='flex gap-2'>
         { userName?
