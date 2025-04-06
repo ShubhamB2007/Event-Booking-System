@@ -54,7 +54,7 @@ const Events = () => {
         <motion.div onClick={()=> navigate(`/event-detail/${event._id}`)} key={index} 
         variants={ProductVariants} initial='hidden' animate='visible' custom={index}
         className='cursor-pointer w-40 lg:w-72 h-[270px] lg:h-[410px] border rounded-lg relative bg-white shadow-lg'>
-          <img  src={event.image.includes('uploads') ? `http://localhost:3000${event.image}` : event.image} alt="" className='rounded-lg w-full h-[200px] lg:h-80 object-cover brightness-90' />
+          <img  src={event.image.includes('uploads') ? `https://event-backend-s1hg.onrender.com${event.image}` : event.image} alt="" className='rounded-lg w-full h-[200px] lg:h-80 object-cover brightness-90' />
           <div className='w-16 h-6 absolute text-white bg-[#e24718] rounded-lg text-xs flex justify-center items-center font-bold top-1 left-2'>{event.category}</div>
           <div className='absolute w-full top-48 lg:top-80 h-[90px]'>
               <div className='flex flex-col ml-2 lg:ml-4'>
