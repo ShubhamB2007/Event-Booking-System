@@ -68,7 +68,7 @@ const BookingList = () => {
          variants={BookingVariants} initial='hidden' animate='visible' custom={index}
          key={index} className='w-[80%] lg:w-[50%] h-[110px] bg-[#e24718] rounded-lg relative top-20 flex items-center'>
            <div className='w-20 h-24 border absolute left-2 rounded-lg'>
-           <img src={item?.image?.includes('uploads') ? `http://localhost:3000${item.image}` : item.image} alt=""  className='w-full h-full object-cover rounded-lg'/>  
+           <img src={item?.image?.includes('uploads') ? `https://event-backend-s1hg.onrender.com${item.image}` : item.image} alt=""  className='w-full h-full object-cover rounded-lg'/>  
            </div>
            <p className='text-white font-bold absolute top-3 left-[102px] text-xl'>{item.name}</p>
            <p className='text-white absolute top-11 left-[102px]'>Tickets: {item.tickets}</p>
