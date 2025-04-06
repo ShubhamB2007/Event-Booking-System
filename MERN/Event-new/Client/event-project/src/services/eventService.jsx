@@ -13,7 +13,7 @@ export const fetchEventById = async(id)=>{
 
 export const fetchEventByName = async (name) => {
    try {
-     const response = await axios.get(`http://localhost:3000/api/events/name/${name}`);
+     const response = await axios.get(`https://event-backend-s1hg.onrender.com/api/events/name/${name}`);
      return response.data;
    } catch (error) {
      console.error("Error fetching event:", name, error.response?.data || error.message);

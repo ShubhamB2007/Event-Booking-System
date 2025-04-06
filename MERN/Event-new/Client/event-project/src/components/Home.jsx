@@ -87,7 +87,7 @@ const Home = () => {
 
     for (let i = 0; i < retries; i++) {
     try {
-      const res = await axios.post('http://localhost:3000/api/events/suggest-events', {userId})
+      const res = await axios.post('https://event-backend-s1hg.onrender.com/api/events/suggest-events', {userId})
       const suggestionNames = res.data.suggestions;
       console.log(suggestionNames)
 
