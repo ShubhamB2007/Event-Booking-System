@@ -202,17 +202,19 @@ router.delete('/:id', async (req, res) => {
             'Content-Type': 'application/json',
           }
         }) 
-
+      console.log("AI API Response:", response.data);
       const reply = response?.data?.choices?.[0]?.message?.content;
-      console.log({reply})
-      res.json({ reply });
+      const eventNames = reply
+        .split('\n')
+        .filter(line => line.match(/^\d+\.\s+\*\*(.+)\*\*/)) 
+        .map(line => line.match(/^\d+\.\s+\*\*(.+)\*\*/)[1]); 
+
+         res.json({ reply: eventNames });
+        console.log({reply})
     } catch (error) {
-      console.error("AI Suggestion Error:", error.response?.data || error.message || error);
+      console.error("AI Suggestion Error:", error);
       res.status(500).json({ error: "Failed to generate event suggestions" });
     }
  })
-
-
-
   
   module.exports = router;
