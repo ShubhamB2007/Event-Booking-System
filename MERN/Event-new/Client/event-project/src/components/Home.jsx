@@ -90,6 +90,7 @@ const Home = () => {
       const res = await axios.post('https://event-backend-s1hg.onrender.com/api/events/suggest-events', {userId})
       console.log(res.data)
       const suggestionNames = res.data.reply;
+      console.log(res.data.reply)
       console.log(suggestionNames)
 
       if (!suggestionNames || suggestionNames.length === 0) {
