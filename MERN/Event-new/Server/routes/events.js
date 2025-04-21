@@ -8,6 +8,8 @@ const multer = require('multer')
 require('dotenv').config()
 const axios = require('axios')
 
+const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
