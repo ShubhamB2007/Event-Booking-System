@@ -203,6 +203,7 @@ router.delete('/:id', async (req, res) => {
           }
         }) 
 
+      console.log("AI API Response:", response.data);
       const reply = response?.data?.choices?.[0]?.message?.content;
       console.log({reply})
       res.json({ reply });
