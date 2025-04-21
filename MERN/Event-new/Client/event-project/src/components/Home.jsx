@@ -126,9 +126,14 @@ const Home = () => {
     }    
 }}
 
-  useEffect(()=>{
-    fetchSuggestionAndEvents()
-  },[])  
+useEffect(() => {
+  let hasFetched = false;
+
+  if (!hasFetched) {
+    fetchSuggestionAndEvents();
+    hasFetched = true;
+  }
+}, []);
 
   const goToEvents = ()=>{
     navigate('/events')
