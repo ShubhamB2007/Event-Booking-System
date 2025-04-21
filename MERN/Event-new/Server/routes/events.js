@@ -204,13 +204,13 @@ router.delete('/:id', async (req, res) => {
         }) 
       console.log("AI API Response:", response.data);
       const reply = response?.data?.choices?.[0]?.message?.content;
+      console.log({reply})
       const eventNames = reply
         .split('\n')
         .filter(line => line.match(/^\d+\.\s+\*\*(.+)\*\*/)) 
         .map(line => line.match(/^\d+\.\s+\*\*(.+)\*\*/)[1]); 
          console.log(eventNames)
          res.json({ reply: eventNames });
-        // console.log({reply})
     } catch (error) {
       console.error("AI Suggestion Error:", error);
       res.status(500).json({ error: "Failed to generate event suggestions" });
