@@ -189,7 +189,10 @@ router.delete('/:id', async (req, res) => {
         return res.status(404).json({ message: "No available events found" });
       }
     
-      const prompt = `A user has previously booked following events: ${bookedEventsNames.join( ', ')}. From the available events: ${availableEvents.map(e=>e.name).join(', ')},suggest 3 events names only (not anything else) that match user's interest`
+      const prompt = `A user has previously booked the following events: ${bookedEventsNames.join(', ')}. From the available events: ${availableEvents.map(e => e.name).join(', ')}, suggest exactly 3 event names only (not anything else), and return them as a numbered markdown list using this format:
+        1. **Event Name**
+        2. **Event Name**
+        3. **Event Name**`;
 
       const response = await axios.post(API_URL, {
           model: "deepseek/deepseek-chat-v3-0324:free",
