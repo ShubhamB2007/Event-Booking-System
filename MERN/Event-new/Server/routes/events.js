@@ -208,9 +208,9 @@ router.delete('/:id', async (req, res) => {
         .split('\n')
         .filter(line => line.match(/^\d+\.\s+\*\*(.+)\*\*/)) 
         .map(line => line.match(/^\d+\.\s+\*\*(.+)\*\*/)[1]); 
-
+         console.log(eventNames)
          res.json({ reply: eventNames });
-        console.log({reply})
+        // console.log({reply})
     } catch (error) {
       console.error("AI Suggestion Error:", error);
       res.status(500).json({ error: "Failed to generate event suggestions" });
