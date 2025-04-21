@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://localhost:3000/api/login'
+    baseURL: 'https://event-backend-s1hg.onrender.com/api/login'
 })
 
 export const googleAuth = (code) => api.post("/google", { code });
