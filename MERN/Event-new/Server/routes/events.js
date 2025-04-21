@@ -208,10 +208,19 @@ router.delete('/:id', async (req, res) => {
       console.log("AI API Response:", response.data);
       const reply = response?.data?.choices?.[0]?.message?.content;
       console.log({reply})
-      const eventNames = reply
-        .split('\n')
-        .filter(line => line.match(/^\d+\.\s+\*\*(.+)\*\*/)) 
-        .map(line => line.match(/^\d+\.\s+\*\*(.+)\*\*/)[1]); 
+     let eventNames = [];
+
+      if (reply.includes('**')) {
+        eventNames = reply
+          .split('\n')
+          .filter(line => /^\d+\.\s+\*\*(.+?)\*\*/.test(line))
+          .map(line => line.match(/^\d+\.\s+\*\*(.+?)\*\*/)[1]);
+      } else {
+        eventNames = reply
+          .split(',')
+          .map(name => name.trim())
+          .filter(name => name.length > 0);
+      }
          console.log(eventNames)
          res.json({ reply: eventNames });
     } catch (error) {
