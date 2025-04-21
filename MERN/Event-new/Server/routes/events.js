@@ -192,7 +192,7 @@ router.delete('/:id', async (req, res) => {
       const prompt = `A user has previously booked following events: ${bookedEventsNames.join( ', ')}. From the available events: ${availableEvents.map(e=>e.name).join(', ')},suggest 3 events names only (not anything else) that match user's interest`
 
       const response = await axios.post(API_URL, {
-          model: "google/gemini-2.5-pro-exp-03-25:free",
+          model: "deepseek/deepseek-chat-v3-0324:free",
           messages: [
             { role: "user", content:prompt }
           ]
