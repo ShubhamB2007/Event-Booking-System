@@ -7,8 +7,6 @@ const { v4: uuid } = require('uuid');
 const multer = require('multer')
 require('dotenv').config()
 const axios = require('axios')
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -188,27 +186,30 @@ router.delete('/:id', async (req, res) => {
       if (!availableEvents.length) {
         return res.status(404).json({ message: "No available events found" });
       }
-
-      const model = genAI.getGenerativeModel({ model: "models/gemini-1.5-pro-latest" });
-
     
-      const prompt = `A user has previously booked following events: ${bookedEventsNames.join( ', ')}. From the available events: ${availableEvents.map(e=>e.name).join(', ')},suggest 3 events only names(not anything else) that match user's interest`
+      const prompt = `A user has previously booked following events: ${bookedEventsNames.join( ', ')}. From the available events: ${availableEvents.map(e=>e.name).join(', ')},suggest 3 events names only (not anything else) that match user's interest`
 
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      const suggestionText = response.text();
+      const response = await axios.post(API_URL, {
+          model: "google/gemini-2.5-pro-exp-03-25:free",
+          messages: [
+            { role: "user", content:prompt }
+          ]
+        }, {
+          headers: {
+            'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+            'Content-Type': 'application/json',
+          }
+        }) 
 
-      const suggestions = suggestionText
-        .split('\n')
-        .map(line => line.replace(/^\d+\.\s*/, '').trim())
-        .filter(Boolean);
-  
-      res.json({ suggestions });
+      const reply = response?.data?.choices?.[0]?.message?.content;
+      console.log({reply})
+      res.json({ reply });
     } catch (error) {
       console.error("AI Suggestion Error:", error);
       res.status(500).json({ error: "Failed to generate event suggestions" });
     }
  })
+
 
 
   
