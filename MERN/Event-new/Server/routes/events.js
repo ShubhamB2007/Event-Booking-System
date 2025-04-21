@@ -203,12 +203,11 @@ router.delete('/:id', async (req, res) => {
           }
         }) 
 
-      console.log("AI API Response:", response.data);
       const reply = response?.data?.choices?.[0]?.message?.content;
       console.log({reply})
       res.json({ reply });
     } catch (error) {
-      console.error("AI Suggestion Error:", error);
+      console.error("AI Suggestion Error:", error.response?.data || error.message || error);
       res.status(500).json({ error: "Failed to generate event suggestions" });
     }
  })
