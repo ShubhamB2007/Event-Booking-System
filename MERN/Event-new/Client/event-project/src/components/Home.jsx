@@ -80,7 +80,7 @@ const Home = () => {
       console.log("Fallback Events (no user):", initialEventsData.flat());
       return;
     }
-  
+   
 
     let retries = 3;
     let delay = 40000;
@@ -88,7 +88,7 @@ const Home = () => {
     for (let i = 0; i < retries; i++) {
     try {
       const res = await axios.post('https://event-backend-s1hg.onrender.com/api/events/suggest-events', {userId})
-      const suggestionNames = res.data.suggestions;
+      const suggestionNames = res.data.reply;
       console.log(suggestionNames)
 
       if (!suggestionNames || suggestionNames.length === 0) {
@@ -169,7 +169,7 @@ const Home = () => {
   return ( 
     <div className='w-full h-[1000px] lg:h-[1700px] flex justify-center'>
       <div className='w-full lg:h-16 h-36 bg-white z-50'>
-        <div className='flex lg:gap-4 lg:justify-start justify-between items-center absolute top-4 left-6 lg:w-[500px] w-[345px]'>
+        <div className='flex lg:gap-4 lg:justify-start justify-between items-center absolute top-4 left-6 lg:w-[500px] w-[370px]'>
         <p className='text-black font-semibold text-sm lg:text-lg lg:w-60 w-44'>{userName ? `Hello, ${userName }`:'Hello Guest'}</p>
         <div className='flex gap-2'>
         { userName?
@@ -212,7 +212,7 @@ const Home = () => {
                 onClick={()=>navigate(`/event-detail/${event._id}`)}
                 key={index}
                 className='cursor-pointer w-24 lg:w-72 h-44 lg:h-[410px] border rounded-lg relative bg-white shadow-lg'>
-                <img src={event.image?.includes('uploads') ? `https://event-backend-s1hg.onrender.com${event.image}` : event.image} alt="" className='rounded-lg w-full lg:h-80 h-32 object-cover brightness-90' />
+                <img src={event.image?.includes('uploads') ? `http://localhost:3000${event.image}` : event.image} alt="" className='rounded-lg w-full lg:h-80 h-32 object-cover brightness-90' />
                 <div className='lg:w-16 lg:h-6 h-4 w-12 absolute text-white bg-[#e24718] rounded-lg lg:text-xs text-[8px] flex justify-center items-center font-bold top-1 left-2'>{event.category}</div>
                 <div className='absolute w-full lg:top-80 top-32 h-[90px]'>
                   <div className='flex flex-col lg:ml-4 ml-2'>
@@ -231,7 +231,7 @@ const Home = () => {
         variants={FooterVariants} initial='hidden' animate={isInView ? 'visible': 'hidden'}
         className="bg-white rounded-lg shadow-sm m-4 absolute top-[800px] lg:top-[1550px]">
             <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between relative h-24">
-              <span className="text-sm sm:text-center">© 2025 <a href="https://event-frontend-ekff.onrender.com" className="hover:underline text-[#e24718]">EventBooking™</a>. All Rights Reserved.
+              <span className="text-sm sm:text-center">© 2025 <a href="https://flowbite.com/" className="hover:underline text-[#e24718]">EventBooking™</a>. All Rights Reserved.
             </span>
             <ul className="flex gap-3 items-center mt-2 lg:mb-2 text-xs lg:text-sm font-medium relative lg:right-4 right-7">
                 <li>
