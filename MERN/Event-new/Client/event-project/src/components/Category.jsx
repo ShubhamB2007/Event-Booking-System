@@ -30,14 +30,15 @@ const Category = () => {
   return (
     <div ref={ref} className='w-full h-3 lg:h-56 absolute lg:top-[770px] top-96 flex justify-center border'>
             <p className='text-2xl font-bold text-black absolute top-3'>Categories</p>
-            <div className='w-[87%] h-40 absolute top-12 flex gap-2 lg:gap-[105px] justify-center'>
+            <div className='w-[87%] h-40 absolute top-12 flex gap-2 lg:gap-24 justify-center'>
               {categories.map((item,index)=>(
                <motion.div 
                variants={CategoryVariants}
                initial="hidden"
                animate={isInView ? "visible" : "hidden"}
+               whileHover={{scale:1.1,  transition: { duration: 0.2 }}}
                transition={{ duration: 0.3, delay: index * 0.2 }}
-               key={index} onClick={()=>goToEvents(item.name)} className={`cursor-pointer w-16 h-16 lg:w-36 lg:h-36 rounded-lg relative top-2 ${item.styles} flex justify-center items-center`}>
+               key={index} onClick={()=>goToEvents(item.name)} className={`cursor-pointer w-16 h-16 lg:w-36 lg:h-36 rounded-lg relative top-2 ${item.styles} flex justify-center items-center shadow-xl`}>
                   <img src={item.image} alt={item.name} className='lg:w-28 w-10 lg:top-8 top-6 absolute lg:left-9 left-5' />
                   <p className='text-white absolute lg:top-4 top-2 lg:left-5 left-3 font-semibold lg:text-base text-[9px]'>{item.name}</p>
                </motion.div>

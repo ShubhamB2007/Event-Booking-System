@@ -150,100 +150,171 @@ const EventDetail = () => {
 
   
   return ( 
-    <div className='w-full h-full absolute flex justify-center'>
-   
-    {(!event)&&(
-      <div className="loader absolute top-64">
-      <div className="circle"></div>
-      <div className="circle"></div>
-      <div className="circle"></div>
-      <div className="circle"></div>
-   </div>
-    )}
+    <div className='w-full h-full flex flex-col items-center justify-start bg-[#f6f6f6]'>
 
-      <div className='w-full h-96 absolute lg:h-full lg:w-[50%] lg:left-0'>
-        {event && (
-        <motion.img 
-        variants={ImageVariants} initial='hidden' animate='visible'
-        img src={event.image?.includes('uploads') ? `https://event-backend-s1hg.onrender.com${event.image}` : event.image}  alt="" className='absolute w-full h-full object-cover' />
-      )}
-      </div>
+  {/* Loader */}
+  {!event && (
+    <div className="loader my-32">
+      <div className="circle"></div>
+      <div className="circle"></div>
+      <div className="circle"></div>
+      <div className="circle"></div>
+    </div>
+  )}
 
-      <FaAngleLeft onClick={() => navigate('/')} className='text-black cursor-pointer text-2xl font-bold x-10 absolute top-4 left-4' />
+  {/* Main Container */}
+  {event && (
+    <div className='flex flex-col lg:flex-row w-full h-full'>
 
+      {/* Left: Event Image */}
       <motion.div
-      variants={TextVariants} initial='hidden' animate='visible'
-      className='border w-full min-h-96 absolute top-96 lg:h-full lg:w-[50%] lg:left-[50%] lg:top-0 lg:border-l-4'>
-        <button onClick={handleShow} className='w-32 h-8 text-white bg-[#e24718] rounded-lg absolute top-5 left-60 lg:left-[585px]'>Book Now</button>
-        <p className='text-2xl font-bold text-black absolute top-5 left-7 lg:w-96 w-52 whitespace-nowrap text-ellipsis overflow-hidden h-9'>{event?.name}</p>
-        <div className='text-white w-44 absolute top-16 left-5 min-h-[56px] flex items-center'>
-          <SlCalender className='text-3xl font-bold absolute left-3 text-gray-800 mb-3' />
-          <p className='absolute top-1 left-[56px] text-gray-800'>{event?.date}</p>
-          <p className='relative top-2 left-[56px] text-xs text-gray-800 mt-1'>
-             {event?.venue?.name || "Venue not available"}
-           </p>
-        </div>
-        <p className='text-gray-800 text-sm absolute top-20 left-60 lg:left-[585px]'>11:00 AM - 9:00 PM</p>
-
-        <div className='w-full absolute top-32 h-56'>
-          <p className='absolute text-black font-bold text-2xl top-3 left-7'>About</p>
-          <div className='w-[87%] h-44 absolute top-12 left-7 overflow-hidden'>
-            <p className='text-gray-800 text-sm text-ellipsis'>{event?.description}</p>
-          </div>
-        </div>
+        variants={ImageVariants}
+        initial='hidden'
+        animate='visible'
+        className='w-full lg:w-1/2 h-96 lg:h-screen'
+      >
+        <img
+          src={
+            event.image?.includes('uploads')
+              ? `https://event-backend-s1hg.onrender.com${event.image}`
+              : event.image
+          }
+          alt="Event"
+          className='w-full h-full object-cover'
+        />
       </motion.div>
 
-      {show &&
-        <motion.div 
-        variants={BookVariants} initial='hidden' animate='visible'
-        className='w-[85%] lg:w-[45%] lg:top-32 h-[360px] lg:h-[420px] bg-[#141414] rounded-lg absolute top-40 text-white flex'>
-          <div className='w-[50%] h-[65%] border-r-2 border-gray-500 flex flex-col items-center gap-4 mt-10 pt-10 pr-1'>
-            <p className='lg:text-xl text-base absolute top-9 font-semibold'>Booking Details</p>
-           <div className='lg:w-72 w-32 lg:h-12 h-10 border flex justify-between items-center gap-2 border-gray-500 rounded-lg p-3'> 
-          <p className='lg:text-lg text-xs ml-0 mt-[12px]'>Ticket Price:</p>
-          <p className='font-bold text-[#e24718] lg:text-lg text-xs mt-[13px]'>{event.price}</p>
-          </div>
-          <div className='lg:w-72 w-32 lg:h-12 h-10 border flex items-center gap-2 border-gray-500 rounded-lg p-3 justify-between'>
-          <p className='lg:text-lg text-xs mt-[12px]'>Ticket Quantity:</p>
-          <select
-            onChange={handleQuantityChange}
-            className='bg-black border rounded-lg w-12'
-            value={quantity}
-          >
-            {[1, 2, 3, 4].map((num) => (
-              <option key={num} className='bg-black text-white' value={num}>{num}</option>
-            ))}
-          </select>
-          </div>
-          <div className='lg:w-72 w-32 lg:h-12 h-10 border flex items-center gap-2 border-gray-500 rounded-lg p-3 justify-between'>
-            <p className='lg:text-lg text-xs mt-[12px]'>Total Amount:</p>
-            <p className='font-bold text-[#e24718] lg:text-lg text-xs mt-[14px]'>{event.price * quantity}</p>
-          </div>
-          </div>
+      {/* Right: Event Details */}
+      <motion.div
+        variants={TextVariants}
+        initial='hidden'
+        animate='visible'
+        className='w-full lg:w-1/2 px-6 lg:px-12 py-8 lg:py-12 border-t lg:border-t-0 lg:border-l-4 border-[#e24718] relative'
+      >
+        {/* Back Button */}
+        <FaAngleLeft
+          onClick={() => navigate('/')}
+          className='text-black cursor-pointer text-2xl font-bold mb-4'
+        />
 
-         <div className='w-[50%] h-[65%] mt-10 flex flex-col items-center gap-4 pt-10'>
-            <p className='lg:text-xl text-base absolute top-9 font-semibold'>Payment Details</p>
-            <input type="text" name='number' onChange={handleChange} className='payinput lg:w-72 w-32 lg:h-12 h-10 border border-gray-500 bg-transparent rounded-lg pl-2 pb-1 lg:text-base text-xs' placeholder='Enter Debit/Credit Card No.' />
-            <input type="text" name='name' onChange={handleChange} className='payinput lg:w-72 w-32 lg:h-12 h-10 border border-gray-500 bg-transparent rounded-lg pl-2 pb-1 lg:text-base text-xs' placeholder='Enter Your Full Name' />
-            <input type="text" name='CVV' onChange={handleChange} className='payinput lg:w-72 w-32 lg:h-12 h-10 border border-gray-500 bg-transparent rounded-lg pl-2 pb-1 lg:text-base text-xs' placeholder='Enter Your CVV' />
-         </div>
-  
-
+        {/* Header Row */}
+        <div className='flex justify-between items-center mb-6'>
+          <h1 className='text-2xl font-bold text-black truncate w-2/3'>
+            {event?.name}
+          </h1>
           <button
-            onClick={handleBookNow}
-            className='text-white font-bold bg-[#e24718] w-32 lg:w-48 lg:h-12 h-8 rounded-lg absolute lg:left-[140px] lg:top-[330px] top-[305px] left-7 hover:bg-[#e24718d4] hover:duration-200'
+            onClick={handleShow}
+            className='px-4 py-2 text-white bg-[#e24718] rounded-lg hover:bg-[#e24718d6] transition'
           >
             Book Now
           </button>
-          <button
-            onClick={() => setShow(false)}
-            className='bg-red-600 w-32 h-8 text-sm lg:w-48 lg:h-12 font-semibold lg:text-base rounded-lg absolute left-[51.5%] top-[305px] lg:left-[51.4%] lg:top-[330px] hover:bg-red-700 hover:duration-200'
-          >
-            Cancel
-          </button>
-        </motion.div>
-      }
+        </div>
+
+        {/* Date & Venue */}
+        <div className='flex items-start gap-3 text-gray-800 mb-4'>
+          <SlCalender className='text-2xl' />
+          <div>
+            <p className='font-semibold'>{event?.date}</p>
+            <p className='text-sm'>
+              {event?.venue?.name || 'Venue not available'}
+            </p>
+            <p className='text-sm'>11:00 AM - 9:00 PM</p>
+          </div>
+        </div>
+
+        {/* Description */}
+        <div>
+          <h2 className='text-xl font-bold text-black mb-2'>About</h2>
+          <p className='text-gray-800 text-sm'>{event?.description}</p>
+        </div>
+      </motion.div>
     </div>
+  )}
+
+  {/* Booking Modal */}
+  {show && (
+    <motion.div
+      variants={BookVariants}
+      initial='hidden'
+      animate='visible'
+      className='fixed top-20 lg:top-24 z-50 bg-[#141414] text-white w-[90%] max-w-5xl rounded-xl shadow-lg p-6 lg:p-10 flex flex-col lg:flex-row gap-8'
+    >
+      {/* Left - Booking Info */}
+      <div className='flex-1 flex flex-col gap-4'>
+        <h3 className='text-lg lg:text-xl font-semibold mb-2'>Booking Details</h3>
+
+        <div className='border border-gray-500 rounded-lg p-3 flex justify-between items-center'>
+          <span className='text-sm lg:text-base'>Ticket Price:</span>
+          <span className='font-bold text-[#e24718]'>{event.price}</span>
+        </div>
+
+        <div className='border border-gray-500 rounded-lg p-3 flex justify-between items-center'>
+          <span className='text-sm lg:text-base'>Ticket Quantity:</span>
+          <select
+            onChange={handleQuantityChange}
+            value={quantity}
+            className='bg-black border border-gray-500 rounded-md text-white p-1 w-16 text-sm'
+          >
+            {[1, 2, 3, 4].map((num) => (
+              <option key={num} value={num}>
+                {num}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className='border border-gray-500 rounded-lg p-3 flex justify-between items-center'>
+          <span className='text-sm lg:text-base'>Total Amount:</span>
+          <span className='font-bold text-[#e24718]'>{event.price * quantity}</span>
+        </div>
+      </div>
+
+      {/* Right - Payment Info */}
+      <div className='flex-1 flex flex-col gap-4'>
+        <h3 className='text-lg lg:text-xl font-semibold mb-2'>Payment Details</h3>
+
+        <input
+          type='text'
+          name='number'
+          onChange={handleChange}
+          placeholder='Enter Card Number'
+          className='border border-gray-500 bg-transparent text-white rounded-lg p-2 text-sm lg:text-base'
+        />
+        <input
+          type='text'
+          name='name'
+          onChange={handleChange}
+          placeholder='Enter Your Full Name'
+          className='border border-gray-500 bg-transparent text-white rounded-lg p-2 text-sm lg:text-base'
+        />
+        <input
+          type='text'
+          name='CVV'
+          onChange={handleChange}
+          placeholder='Enter Your CVV'
+          className='border border-gray-500 bg-transparent text-white rounded-lg p-2 text-sm lg:text-base'
+        />
+      </div>
+
+      {/* Actions */}
+      <div className='flex flex-col gap-2 justify-end w-full lg:w-auto lg:items-end lg:justify-between mt-4 lg:mt-0'>
+        <button
+          onClick={handleBookNow}
+          className='bg-[#e24718] hover:bg-[#e24718cc] transition text-white font-semibold py-2 px-6 rounded-lg w-full lg:w-48'
+        >
+          Book Now
+        </button>
+        <button
+          onClick={() => setShow(false)}
+          className='bg-red-600 hover:bg-red-700 transition text-white font-semibold py-2 px-6 rounded-lg w-full lg:w-48'
+        >
+          Cancel
+        </button>
+      </div>
+    </motion.div>
+  )}
+</div>
+
   );
 };
 

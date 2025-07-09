@@ -13,7 +13,7 @@ function App() {
   
   return (
     <Router>
-    <div className='lg:w-[1521px] w-screen min-h-screen absolute bg-[#fffbfa] overflow-x-hidden'>
+    <div className='lg:w-[1521px] w-screen min-h-screen absolute bg-[#f6f6f6] overflow-x-hidden'>
         <Routes> 
             <Route
             path='/signup'

@@ -175,10 +175,8 @@ useEffect(() => {
  
   return ( 
     <div className='w-full h-[1000px] lg:h-[1700px] flex justify-center'>
-      <div className='w-full lg:h-16 h-36 bg-white z-50'>
+      <div className='w-full lg:h-16 h-36 bg-[#f6f6f6] z-50'>
         <div className='flex lg:gap-4 lg:justify-start justify-between items-center absolute top-4 left-6 lg:w-[500px] w-[370px]'>
-        <p className='text-black font-semibold text-sm lg:text-lg lg:w-60 w-44'>{userName ? `Hello, ${userName }`:'Hello Guest'}</p>
-        <div className='flex gap-2'>
         { userName?
          <button onClick={LogOut} className='bg-[#e24718] text-white lg:text-base text-[10px] font-semibold w-20 lg:w-28 h-9 rounded-xl mb-3 lg:ml-2 ml-1'>{'Log Out'}</button>:
         <button onClick={()=>navigate('/login')} className='bg-[#e24718] text-white mb-3 font-semibold lg:text-base text-[10px] w-20 h-9 lg:g:w-28 rounded-xl lg:ml-2 ml-1'>{'Log In'}</button>
@@ -186,6 +184,8 @@ useEffect(() => {
        { role === 'Organizer' &&
        <button onClick={()=>navigate('/organize-event')} className='lg:w-36 w-24 lg:text-base text-[10px] h-9 lg:h-9 rounded-xl bg-[#e24718] text-white font-semibold mb-3'>Organize Event</button>
       }
+        <p className='text-black font-semibold text-sm lg:text-lg lg:w-60 w-44'>{userName ? `Hello, ${userName }`:'Hello Guest'}</p>
+        <div className='flex gap-2'>
          </div>
         </div>
         
